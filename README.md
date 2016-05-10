@@ -352,13 +352,7 @@ An example:
 
 // Media Queries
 
-@media @small {
-
-  .component {
-    width: 100%;
-  }
-
-}
+// TODO
 
 
 ```
