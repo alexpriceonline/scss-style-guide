@@ -457,16 +457,16 @@ The file will look something like this:
 @import 'vendor/normalize';
 
 // Variables
-@import 'variables/media-queries'
-@import 'variables/colours'
-@import 'variables/other-variables-like-fonts'
+@import 'variables/media-queries';
+@import 'variables/colours';
+@import 'variables/other-variables-like-fonts';
 
 // Mixins
-@import 'mixins/clearfix'
-@import 'mixins/other-mixins'
+@import 'mixins/clearfix';
+@import 'mixins/other-mixins';
 
 // Utils
-@import 'utils/utils'
+@import 'utils/utils';
 
 // Base
 @import 'base/global';
@@ -476,12 +476,12 @@ The file will look something like this:
 // Components
 
 // Board Components
-@import 'components/board/board-component-1"
-@import 'components/board/board-component-2"
+@import 'components/board/board-component-1';
+@import 'components/board/board-component-2';
 
 // Header Components
-@import 'components/header/header-component-1'
-@import 'components/header/header-component-2' // and so forth
+@import 'components/header/header-component-1';
+@import 'components/header/header-component-2'; // and so forth
 
 
 ```
