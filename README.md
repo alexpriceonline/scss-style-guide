@@ -392,6 +392,8 @@ An example:
 
 We should try to avoid a heavy relience on variables. I recommend using them for breakpoint values, colours and maybe stuff like font-families if necessary. Substantial use of variables can make css hard to follow and cause you to have to repeatedly open your variables files, which gets old pretty quick.
 
+### Colours
+
 I like to have a `variables/_colours.scss` that contains:
 - Named `rgba` functions for easy `alpha` value changes
 - Named colour variables that represent those colours at 100% opacity
