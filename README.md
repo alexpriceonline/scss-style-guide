@@ -12,12 +12,13 @@ This is my personal guide book to writing clean, modular SCSS. It is heavily inf
     - [Media Queries](#media-queries)
     - [Keeping It Encapsulated](#keeping-it-encapsulated)
     - [Structure](#structure)
-4. [JavaScript](#4-javascript)
-5. [Mixins](#5-mixins)
-6. [Utilities](#6-utilities)
-7. [File Structure](#7-file-structure)
-8. [Style](#8-style)
-9. [Miscellany](#9-miscellany)
+4. [Variables](#4-variables)
+5. [JavaScript](#5-javascript)
+6. [Mixins](#6-mixins)
+7. [Utilities](#7-utilities)
+8. [File Structure](#8-file-structure)
+9. [Style](#9-style)
+10. [Miscellany](#10-miscellany)
 
 
 ## 1. Tools
@@ -376,13 +377,56 @@ An example:
 
 // Media Queries
 
-// TODO
+@include media("<=phone") {
+  .component {
+    /* … */
+  }
+}
 
 
 ```
 
+## 4. Variables
 
-## 4. JavaScript
+> Use variables sparingly.
+
+We should try to avoid a heavy relience on variables. I recommend using them for breakpoint values, colours and maybe stuff like font-families if necessary. Substantial use of variables can make css hard to follow and cause you to have to repeatedly open your variables files, which gets old pretty quick.
+
+I like to have a `variables/_colours.scss` that contains:
+- Named `rgba` functions for easy `alpha` value changes
+- Named colour variables that represent those colours at 100% opacity
+- Named brand variables that reference specific colour variables
+ 
+
+**Example:**
+
+``` SCSS
+// _colours.scss
+
+// Functions
+
+@function dark-blue($opacity:1) {
+    @return rgba(44, 62, 80, $opacity)
+}
+
+@function white($opacity:1) {
+    @return rgba(236, 240, 241, $opacity)
+}
+
+// Colour variables
+
+$dark-blue: dark-blue();
+$white:     white();
+
+// Brand colours
+
+$brand-main-colour: $dark-blue;
+$brand-highlight-colour: $white;
+```
+
+This allows us to reference brand colours in our SCSS while continuing to have easy access to specific colours if we need them. Meaning if we need to change the main brand colour to a pink, we can simply update the `$brand-main-colour` variable without changing all of our `$dark-blue` colours.
+
+## 5. JavaScript
 
 > Separate style and behavior concerns by using `.js-` prefixed classes for behavior.
 
@@ -413,7 +457,7 @@ Be sure to **use a descriptive class name**. The intent of `.js-open-content-men
 **`.js-` classes should never appear in your stylesheets**. They are for JavaScript only. Inversely, there is never a reason to see presentation classes like `.header-nav-button` in JavaScript. You will see state classes like `.is-state` in your JavaScript and your stylesheets as `.component.is-state`.
 
 
-## 5. Mixins
+## 6. Mixins
 
 > Prefix mixins with `%m-` and only use them sparingly for shared styles.
 
@@ -439,7 +483,7 @@ Mixins are shared styles that are used in more than one component. To prevent st
 ```
 
 
-## 6. Utilities
+## 7. Utilities
 
 > Prefix utility classes with `%u-`.
 
@@ -464,11 +508,11 @@ A few utility rules:
 
 1. No utility class should be so complex that it includes nesting styles.
 2. Utilities should never be overwritten or included in components or mixins.
-3. Use of utility classes should be limited. Include the styles in the components when possible. We don’t need something like `.u-float-left { float: left; }` where including `float: left;` in the component is more visible.
+3. Use of utility classes should be limited. Include the styles in the components when possible. We don’t need something like `%u-float-left { float: left; }` where including `float: left;` in the component is more visible.
 4. You should be able to fit all the utility classes in a single file.
 
 
-## 7. File Structure
+## 8. File Structure
 
 The file will look something like this:
 
@@ -517,11 +561,11 @@ Then include the components. Each component should have its own file and include
 This should output a single `main.css` file (or something similarly named).
 
 
-## 8. Style
+## 9. Style
 
 Even following the above guidelines, it’s still possible to write CSS in a ton of different ways. Writing our CSS in a consistent way makes it more readable for everyone. Take this bit of CSS:
 
-``` LESS
+``` SCSS
 .global-header-nav-item {
   background: $grey;
   border-radius: 3px;
@@ -547,14 +591,14 @@ It sticks to these style rules:
 Many of these are preferences, but standardizing makes reading code easier.
 
 
-## 9. Miscellany
+## 10. Miscellany
 
 You might get the impression from this guide that our CSS is in great shape. That is not the case. While we’ve always stuck to .js classes and often use namespaced-component-looking classes, there is a mishmash of styles and patterns throughout. That’s okay. Going forward, you should rewrite sections according to these rules. Leave the place nicer than you found it.
 
 Some additional things to keep in mind:
 
 - Comments rarely hurt. If you find an answer on Stack Overflow or in a blog post, add the link to a comment so future people know what’s up. It’s good to explain the purpose of the file in a comment at the top.
-- In your markup, order classes like so `<div class="component mod util state js"></div>`.
+- In your markup, order classes like so `<div class="component mod state js"></div>`.
 - You can embed common images and files under 10kb using datauris. In the Trello web client, you can use `embed(/path/to/file)` to do this. This saves a request, but adds to the CSS size, so only use it on extremely common things like the logo.
 - Avoid body classes. There is rarely a need for them. Stick to modifiers within your component.
 - Explicitly write out class names in selectors. Don’t concatenate strings or use preprocessor trickery to build a class name. We want to be able to search for class names and that makes it impossible. This goes for `.js-` classes in JavaScript, too.
