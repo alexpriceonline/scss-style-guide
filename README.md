@@ -408,11 +408,11 @@ I like to have a `variables/_colours.scss` that contains:
 // Functions
 
 @function dark-blue($opacity:1) {
-    @return rgba(44, 62, 80, $opacity)
+    @return rgba(44, 62, 80, $opacity);
 }
 
 @function white($opacity:1) {
-    @return rgba(236, 240, 241, $opacity)
+    @return rgba(236, 240, 241, $opacity);
 }
 
 // Colour variables
