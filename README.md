@@ -428,6 +428,14 @@ $brand-highlight-colour: $white;
 
 This allows us to reference brand colours in our SCSS while continuing to have easy access to specific colours if we need them. Meaning if we need to change the main brand colour to a pink, we can simply update the `$brand-main-colour` variable without changing all of our `$dark-blue` colours.
 
+The colour functions also allow us to change the opacity of colours very easily:
+
+``` SCSS
+.card {
+  background: dark-blue(0.5);
+}
+```
+
 ## 5. JavaScript
 
 > Separate style and behavior concerns by using `.js-` prefixed classes for behavior.
