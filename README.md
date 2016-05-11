@@ -22,7 +22,7 @@ This is my personal guide book to writing clean, modular SCSS. It is heavily inf
 
 ## 1. Tools
 
-> Use only imports, variables, and mixins (and only for vender-prefixed features) from CSS preprocessors.
+> Use only imports, variables, and mixins.
 
 To keep our CSS readable, we try and keep our CSS very vanilla. We use SCSS, but only use imports, data-uri, variables, and some mixins. We use imports so that variables and mixins are available everywhere and it all outputs to a single file. We occasionally use nesting. We don’t use more complex functions like guards and loops.
 
@@ -190,7 +190,31 @@ We also don’t indent state classes. Again, that’s only for descendants. Stat
 
 It might be tempting to add something like a `_mobile.scss` file that contains all your mobile-specific rules. We want to avoid global media queries and instead include them inside our components. This way when we update or delete a component, we’ll be less likely to forget about the media rules.
 
-TODO: Write up using [Include Media](https://github.com/eduardoboucas/include-media).
+I recommend using a package like [Include Media](https://github.com/eduardoboucas/include-media) to handle your media queries. This will allow you to create clear, simple and maintainable styles for all browser varients.
+
+**Example**
+
+``` SCSS
+// _sidebar.scss
+
+.sidebar {
+  width: 30%;
+}
+
+// Media Queries
+
+@include media("<=phone") {
+  .sidebar {
+    display: none;
+  }
+}
+
+@include media(">phone", "<=desktop") {
+  .sidebar {
+    width: 20%;
+  }
+}
+```
 
 Note that print is a media attribute, too. Keep your print rules inside components. We don’t want to forget about them either.
 
@@ -521,8 +545,6 @@ It sticks to these style rules:
 - Keep line length under 80 characters.
 
 Many of these are preferences, but standardizing makes reading code easier.
-
-Note: Since we use [autoprefixer](https://github.com/postcss/autoprefixer), we don't have to worry about writing browser prefixed declarations, like `-webkit-feature`. If you are not using prefixer on your project, then put the standard declaration last. For example: `-webkit-transition: all 100ms; transition: all 100ms;`. Browsers will optimize the standard declaration, but continue to keep the old one around for compatibility. Putting the standard declaration after the vendor one means it will get used and you get the most optimized version.
 
 
 ## 9. Miscellany
